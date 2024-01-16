@@ -9,9 +9,10 @@ def train(data, target,_type):
         a.setup(data=data,target=target)  
         modelsList = a.models().Name.values
         chosenModel = st.selectbox("Choose a model:", modelsList)
-        myModel = a.create_model(a.models()[a.models().Name == chosenModel].index[0]) 
-        a.predict_model(myModel,data.drop(columns=[target]))
-        st.dataframe(a.pull().loc["Mean"])
+        if st.button("Train Model"):    
+            myModel = a.create_model(a.models()[a.models().Name == chosenModel].index[0]) 
+            a.predict_model(myModel,data.drop(columns=[target]))
+            st.dataframe(a.pull().loc["Mean"])
     except ValueError:
         st.write(f"This variable throws an error is not suitable to be a target variable for {_type}")
         st.write(ValueError)
